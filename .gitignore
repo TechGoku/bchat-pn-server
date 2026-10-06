@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.db
+*.db-wal
+*.db-shm
+*.key
+*.pem
+*.p8
+*.env
+bchatpn.toml
+*.egg-info/
+build/
+dist/
+local/

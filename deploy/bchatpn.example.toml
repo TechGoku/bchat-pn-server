@@ -1,0 +1,19 @@
+# Every key is optional except that a push provider must be configured.
+# Anything here can also be set as BCHATPN_<KEY> in the environment (the environment wins).
+
+key_file = "/etc/bchatpn/x25519.key"     # create with: python3 -m bchatpn keygen /etc/bchatpn/x25519.key
+db_path  = "/var/lib/bchatpn/bchatpn.db"
+
+listen_host = "0.0.0.0"
+listen_port = 5000                       # put a reverse proxy in front, or use setcap for a low port
+
+# APNs (iOS). Needs: pip install 'httpx[http2]'
+apns_cert_file = "/etc/bchatpn/apns-cert.pem"   # client certificate (include the private key in the PEM,
+# apns_key_file = "/etc/bchatpn/apns-key.pem"   # or point at it separately)
+apns_topic     = "com.beldex.bchat"
+apns_sandbox   = false
+
+# For a dry run with no credentials (accepts and logs, pushes nothing):
+# log_only = true
+
+# admin_token is better supplied via the environment:  BCHATPN_ADMIN_TOKEN=...

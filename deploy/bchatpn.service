@@ -1,0 +1,25 @@
+# OPTIONAL. bchatpn is a single self-contained process; systemd is just one convenient way to keep it running.
+[Unit]
+Description=BChat push-notification server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=bchatpn
+WorkingDirectory=/opt/bchatpn
+Environment=BCHATPN_CONFIG=/etc/bchatpn/bchatpn.toml
+# EnvironmentFile=/etc/bchatpn/secrets.env      # e.g. BCHATPN_ADMIN_TOKEN=...
+ExecStart=/usr/bin/python3 -m bchatpn serve
+Restart=always
+RestartSec=2
+TimeoutStopSec=20          # > shutdown_grace (10s) so it can drain and flush
+LimitNOFILE=65536
+# Needed only to bind a port below 1024 directly (otherwise keep listen_port >= 1024):
+# AmbientCapabilities=CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/bchatpn
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
